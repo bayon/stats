@@ -7,38 +7,31 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Role.h"
+#import "Company.h"
+#import "Preference.h"
+#import "Status.h"
+
 
 @interface User : NSObject
+
+@property (nonatomic, retain) Role *role;
+@property (nonatomic, retain) Company *company;
+@property (nonatomic, retain) Preference *preference;
+@property (nonatomic, retain) Status *status;
 
 @property (nonatomic, retain) NSString *user_id;
 @property (nonatomic, retain) NSString *first_name;
 @property (nonatomic, retain) NSString *last_name;
+@property (nonatomic, retain) NSString *mobile_phone_number;
+@property (nonatomic, retain) NSString *alt_phone_number;
+@property (nonatomic, retain) NSString *alt_phone_type_id;
+@property (nonatomic, retain) NSString *email;
+@property (nonatomic, retain) NSString *created_at;
+@property (nonatomic, retain) NSString *updated_at;
+@property (nonatomic, retain) NSString *deleted_at;
 
 -(User *)initWithJsonDictionary:(NSDictionary *)dict;
 
-
-
-// NOTE: probably want an array of company objects... each user.
-
 @end
 
-
-
-/*
- 
- "id": "31",
- "first_name": "Brian",
- "last_name": "Webb",
- "mobile_phone_number": "5552987961",
- "alt_phone_number": "",
- "alt_phone_type_id": null,
- "email": "bwebb@indatus.com",
- "created_at": "2014-02-21 23:04:56",
- "updated_at": "2014-02-21 23:04:56",
- "deleted_at": null,
- "companies": [] ARRAY OF COMPANIES ---------------
- 
- ,
- "user_statuses": [],
- "preference_settings": []
- */

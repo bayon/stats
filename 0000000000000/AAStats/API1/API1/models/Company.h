@@ -1,5 +1,5 @@
 //
-//  Companies.h
+//  Company.h
 //  API1
 //
 //  Created by Bayon Forte on 4/11/14.
@@ -8,13 +8,16 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Companies : NSObject
+// L E F T   O F F   H E R E    get this class set up , check tehm all and then see if we can do a successful download and parse.
+
+
+@interface Company : NSObject
 
 @property (nonatomic, retain) NSString *company_id;
 @property (nonatomic, retain) NSString *subdomain;
 @property (nonatomic, retain) NSString *name;
 
--(Companies *)initWithJsonDictionary:(NSDictionary *)dict;
+-(Company *)initWithJsonDictionary:(NSDictionary *)dict;
 
 @end
 

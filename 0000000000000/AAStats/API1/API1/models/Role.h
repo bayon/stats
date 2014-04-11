@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface Role : NSObject
+@property (nonatomic, retain) NSString *role_id;
 @property (nonatomic, retain) NSString *company_id;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *description;
+@property (nonatomic, retain) NSString *role_type_id;
+@property (nonatomic, retain) NSString *created_at;
+@property (nonatomic, retain) NSString *updated_at;
+@property (nonatomic, retain) NSString *deleted_at;
+
 
 @property (nonatomic ,retain ) NSMutableArray *permissions;
 

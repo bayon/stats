@@ -9,7 +9,7 @@
 #import "FBFViewController.h"
 #import "AsyncNetwork.h"
 #import "Constants.h"
-#import "Companies.h"
+#import "Company.h"
 #import "CompaniesCell.h"
 
 
@@ -110,7 +110,7 @@
 		cell = [[CompaniesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
 	}
-	Companies *companiesModel = _arrayOfCompaniesModels[indexPath.row];
+	Company *companiesModel = _arrayOfCompaniesModels[indexPath.row];
 	cell.leftLabel.text = companiesModel.company_id;
 	cell.rightLabel.text = companiesModel.name;
     

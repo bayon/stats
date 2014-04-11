@@ -11,5 +11,5 @@
 
 FOUNDATION_EXPORT NSString *const kNotifySuccess;
 FOUNDATION_EXPORT NSString *const kNotifyFail;
-FOUNDATION_EXPORT NSString *const kArrayOfMusicModels;
+FOUNDATION_EXPORT NSString *const kArrayOfCompaniesModels;
 

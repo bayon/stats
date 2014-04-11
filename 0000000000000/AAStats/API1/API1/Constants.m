@@ -12,6 +12,6 @@
 
 NSString *const kNotifySuccess = @"DataSuccessfullyDownloaded";
 NSString *const kNotifyFail = @"DataFailed";
-NSString *const kArrayOfMusicModels = @"arrayOfMusicModels";
+NSString *const kArrayOfCompaniesModels = @"arrayOfCompaniesModels";
 
 

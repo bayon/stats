@@ -1,0 +1,182 @@
+
+appdelegate
+.h
+
+#import <UIKit/UIKit.h>
+
+@class YOUR_VIEW_CONTROLLER;
+
+@interface APPAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) YOUR_VIEW_CONTROLLER *viewController;
+
+@end
+
+
+
+
+.m
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.viewController = [[APPViewController alloc] initWithNibName:@"YOUR_VIEW_CONTROLLER" bundle:nil];
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+// the root view controller
+.h
+#import <UIKit/UIKit.h>
+
+@interface YOUR_VIEW_CONTROLLER : UIViewController <UIPageViewControllerDataSource>
+
+@property (strong, nonatomic) UIPageViewController *pageController;
+
+@end
+
+.m
+//import your child view controller and ...
+
+#import "YOUR_VIEW_CONTROLLER.h"
+#import "APPChildViewController.h"
+
+@interface YOUR_VIEW_CONTROLLER ()
+
+@end
+
+@implementation YOUR_VIEW_CONTROLLER
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    
+    self.pageController.dataSource = self;
+    [[self.pageController view] setFrame:[[self view] bounds]];
+    
+    APPChildViewController *initialViewController = [self viewControllerAtIndex:0];
+    
+    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+    
+    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    [self addChildViewController:self.pageController];
+    [[self view] addSubview:[self.pageController view]];
+    [self.pageController didMoveToParentViewController:self];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    
+}
+
+- (APPChildViewController *)viewControllerAtIndex:(NSUInteger)index {
+        
+    APPChildViewController *childViewController = [[APPChildViewController alloc] initWithNibName:@"APPChildViewController" bundle:nil];
+    childViewController.index = index;
+    
+    return childViewController;
+    
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    
+    NSUInteger index = [(APPChildViewController *)viewController index];
+    
+    if (index == 0) {
+        return nil;
+    }
+    
+    // Decrease the index by 1 to return
+    index--;
+    
+    return [self viewControllerAtIndex:index];
+    
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    
+    NSUInteger index = [(APPChildViewController *)viewController index];
+    
+    index++;
+    
+    if (index == 5) {
+        return nil;
+    }
+    
+    return [self viewControllerAtIndex:index];
+    
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+    // The number of items reflected in the page indicator.
+    return 5;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+    // The selected item reflected in the page indicator.
+    return 0;
+}
+
+@end
+
+
+
+// CHILD VIEW CONTROLLER(S)
+.h
+
+#import <UIKit/UIKit.h>
+
+@interface APPChildViewController : UIViewController
+
+@property (assign, nonatomic) NSInteger index;
+@property (strong, nonatomic) IBOutlet UILabel *screenNumber;
+
+@end
+
+.m
+
+#import "APPChildViewController.h"
+
+@interface APPChildViewController ()
+
+@end
+
+@implementation APPChildViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if (self) {
+        // Custom initialization
+    }
+    
+    return self;
+    
+}
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    self.screenNumber.text = [NSString stringWithFormat:@"Screen #%d", self.index];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    
+}
+
+@end

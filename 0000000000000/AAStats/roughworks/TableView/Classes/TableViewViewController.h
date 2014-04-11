@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TableViewViewController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
-	 
+	UITableView *tableView1; 
 }
+
+@property (nonatomic,retain) UITableView * tableView1;
+
 @property (nonatomic, strong) IBOutlet UITableView * tblTest;
 @property (nonatomic, retain) UIPinchGestureRecognizer *pinchGestureRecognizer;
 @property (nonatomic) BOOL pinchGestureOn;

@@ -10,7 +10,7 @@
 #import "ThirdView.h"
 @implementation TableViewViewController
 
-@synthesize pinchGestureRecognizer, pinchGestureOn, pinched;
+@synthesize pinchGestureRecognizer, pinchGestureOn, pinched, tableView1;;
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
@@ -39,8 +39,9 @@
     //tblTest = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     //UITableViewStyleGrouped
    // _tblTest = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 300) style:UITableViewStylePlain];
-    [self refreshTable];
+   // [self refreshTable];
     
+    [self buildTableView];
     // GESTURE PINCH
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)] ;
 
@@ -48,6 +49,31 @@
 
     
 
+    
+}
+-(void)buildTableView{
+    //*full screen dimensions
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    tableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0,0,screenWidth,screenHeight) style:UITableViewStylePlain] ;
+    //ALTERNATIVE: Grouped View for Sections
+    //tableView = [[UITableView alloc] initWithFrame:CGRectMake(130,100,500,500) style:UITableViewStyleGrouped] ;
+    tableView1.dataSource = self;
+    tableView1.delegate = self;
+    [self.view addSubview:tableView1];
+    
+    /*
+     //requirements:
+     .h
+     <UITableViewDataSource,UITableViewDelegate>
+     UITableView *tableView1;
+     @property (nonatomic,retain) UITableView * tableView1;
+     .m
+     @synthesize tableView1;
+     
+     */
     
 }
 

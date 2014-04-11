@@ -8,6 +8,7 @@
 
 #import "AsyncNetwork.h"
 #import "Constants.h"
+#import "Companies.h"
 
 
 @interface AsyncNetwork () {
@@ -23,15 +24,10 @@
 
 @implementation AsyncNetwork
 @synthesize connection, responseData, spaceIndex;
- 
-
-
-
 
 
 - (IBAction)postRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary{
    
-    
     NSData *paramatersData = [self encodeDictionary:parameterDictionary];
     //convert data to string
     NSString* dataString = [[NSString alloc] initWithData:paramatersData
@@ -53,13 +49,6 @@
     [connection start];  
 }
 
-/*
- http://hive.indatus.com/authenticate
- telecom1=password&bwebb-gemini=subdomain&bwebb@indatus.com=email
- */
-
-
-
 - (NSData*)encodeDictionary:(NSDictionary*)dictionary {
     NSMutableArray *parts = [[NSMutableArray alloc] init];
     for (NSString *key in dictionary) {
@@ -71,9 +60,6 @@
     NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
 }
-
-
-
 
 #pragma mark - NSURL Delegate Methods
 
@@ -91,7 +77,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	if (responseData != nil) {
-		//[self parseResponseData:responseData];
+		[self parseResponseData:responseData];
         NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
         
         //NSLog(@"response data: %@",responseData);
@@ -117,10 +103,11 @@
   This method parses the json response as NSMutableData, then creates and sends a dictionary
   back with the notification if successful.
   */
-/*
+/**/
+
 - (NSMutableArray *)parseResponseData:(NSMutableData *)mutableResponseData {
     //note: This method returns an array for the sake of a unit test.
-    NSMutableArray *localArrayOfMusicModels = [[NSMutableArray alloc] init];
+    NSMutableArray *localArrayOfCompaniesModels = [[NSMutableArray alloc] init];
 	@try {
 		NSError *e;
 		NSDictionary *dictionaryOfJsonFromResponseData =
@@ -128,24 +115,26 @@
 		                                    options:NSJSONReadingMutableContainers
 		                                      error:&e];
 
-		NSMutableArray *arrayOfAlbums = dictionaryOfJsonFromResponseData[@"albums"];
+		NSMutableArray *arrayOfCompanies = dictionaryOfJsonFromResponseData[@"companies"];
 
 		
 
-		for (NSDictionary *dict in arrayOfAlbums) {
-			MusicModel *musicModel = [[MusicModel alloc] initWithJsonDictionary:dict];
-			[localArrayOfMusicModels addObject:musicModel];
+		for (NSDictionary *dict in arrayOfCompanies) {
+			Companies *companiesModel = [[Companies alloc] initWithJsonDictionary:dict];
+			[localArrayOfCompaniesModels addObject:companiesModel];
 		}
 
-		NSDictionary *dictionaryOfMusicModels = @{ kArrayOfMusicModels : localArrayOfMusicModels };
+		NSDictionary *dictionaryOfCompaniesModels = @{ kArrayOfCompaniesModels : localArrayOfCompaniesModels };
 
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifySuccess object:self userInfo:dictionaryOfMusicModels];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifySuccess object:self userInfo:dictionaryOfCompaniesModels];
 	}
 	@catch (NSException *exception)
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
 	}
-    return localArrayOfMusicModels;
+    
+    
+    return localArrayOfCompaniesModels;
 }
-*/
+
 @end

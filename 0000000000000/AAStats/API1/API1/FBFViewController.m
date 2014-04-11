@@ -66,7 +66,7 @@
         NSDictionary *paramametersDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"bwebb-gemini", @"subdomain",
                                                 @"bwebb@indatus.com", @"email",@"telecom1",@"password", nil];
         //[asyncNetwork asyncButtonPushed:self];
-        [asyncNetwork asyncButtonPushed:url withParameters:paramametersDictionary];
+        [asyncNetwork postRequestToURL:url withParameters:paramametersDictionary];
 	}
 }
 

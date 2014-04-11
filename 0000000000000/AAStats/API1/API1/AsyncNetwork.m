@@ -25,32 +25,12 @@
 @synthesize connection, responseData, spaceIndex;
  
 
-/*
- #### API
- 
- Url: http://hive.indatus.com/authenticate
- 
- Method: POST
- 
- Parameters (for testing only, actual input should be used):
- 
- Parameter | Value
- --- | ---
- subdomain | bwebb-gemini
- email | bwebb@indatus.com
- password | telecom1
- 
- */
 
 
 
-  // L E F T   O F F   H E R E   build this method to receive parameters. Asynchronous? should be.
 
-
-- (IBAction)asyncButtonPushed:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary{
-   // NSURL *url = [NSURL URLWithString:@"http://hive.indatus.com/authenticate"];
-    //NSDictionary *paramametersDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"bwebb-gemini", @"subdomain",
-                             // @"bwebb@indatus.com", @"email",@"telecom1",@"password", nil];
+- (IBAction)postRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary{
+   
     
     NSData *paramatersData = [self encodeDictionary:parameterDictionary];
     //convert data to string

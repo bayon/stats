@@ -16,5 +16,5 @@
 - (NSMutableArray *)parseResponseData:(NSMutableData *)mutableResponseData;
 
 
-- (IBAction)asyncButtonPushed:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary;
+- (IBAction)postRequestToURL:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary;
 @end

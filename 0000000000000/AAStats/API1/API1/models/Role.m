@@ -9,22 +9,24 @@
 #import "Role.h"
 
 @implementation Role
-@synthesize company_id, description, name;
+@synthesize company_id, description, name, permissions;
 
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
         
-        self.company_id = dict[@"id"];
+        self.company_id = dict[@"company_id"];
         self.description = dict[@"description"];
         self.name = dict[@"name"];
-        /*
-         sub levels
-         NSArray *artists        = dict[@"artists"];
-         NSDictionary *artists0  = artists[0];
-         NSString *artistName = artists0[@"name"];
-         self.artist = artistName;
-         */
+        
+          
+        permissions        = dict[@"permissions"];
+        
+        
+        //NSDictionary *permissions0  = permissions[0];
+         //NSString *artistName = permissions0[@"name"];
+         //self.permissions = artistName;
+         
 	}
     
 	return self;

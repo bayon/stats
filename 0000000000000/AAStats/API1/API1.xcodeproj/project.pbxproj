@@ -29,6 +29,7 @@
 		28CA1CED18F84C0C005C5AD4 /* CompaniesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1CEC18F84C0C005C5AD4 /* CompaniesCell.m */; };
 		28CA1CF018F855F7005C5AD4 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1CEF18F855F7005C5AD4 /* Role.m */; };
 		28CA1CF318F85797005C5AD4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1CF218F85797005C5AD4 /* User.m */; };
+		28CA1CF618F85BD0005C5AD4 /* RoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1CF518F85BD0005C5AD4 /* RoleCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		28CA1CEF18F855F7005C5AD4 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Role.m; path = models/Role.m; sourceTree = "<group>"; };
 		28CA1CF118F85797005C5AD4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		28CA1CF218F85797005C5AD4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		28CA1CF418F85BD0005C5AD4 /* RoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleCell.h; sourceTree = "<group>"; };
+		28CA1CF518F85BD0005C5AD4 /* RoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,21 +140,14 @@
 		28CA1CA518F81952005C5AD4 /* API1 */ = {
 			isa = PBXGroup;
 			children = (
-				28CA1CEB18F84C0C005C5AD4 /* CompaniesCell.h */,
-				28CA1CEC18F84C0C005C5AD4 /* CompaniesCell.m */,
+				28CA1CF918F85C0F005C5AD4 /* network */,
+				28CA1CF818F85BFF005C5AD4 /* utility */,
+				28CA1CF718F85BDE005C5AD4 /* views */,
 				28CA1CE718F847E2005C5AD4 /* models */,
-				28CA1CD918F81B2C005C5AD4 /* AsyncNetwork.h */,
-				28CA1CDA18F81B2C005C5AD4 /* AsyncNetwork.m */,
-				28CA1CDC18F81BB0005C5AD4 /* Constants.h */,
-				28CA1CDD18F81BB0005C5AD4 /* Constants.m */,
 				28CA1CAE18F81952005C5AD4 /* FBFAppDelegate.h */,
 				28CA1CAF18F81952005C5AD4 /* FBFAppDelegate.m */,
-				28CA1CB418F81952005C5AD4 /* FBFViewController.h */,
-				28CA1CB518F81952005C5AD4 /* FBFViewController.m */,
 				28CA1CB718F81952005C5AD4 /* Images.xcassets */,
 				28CA1CB118F81952005C5AD4 /* Main.storyboard */,
-				28CA1CD618F81A8E005C5AD4 /* Reachability.h */,
-				28CA1CD718F81A8E005C5AD4 /* Reachability.m */,
 				28CA1CA618F81952005C5AD4 /* Supporting Files */,
 			);
 			path = API1;
@@ -197,6 +193,39 @@
 				28CA1CF218F85797005C5AD4 /* User.m */,
 			);
 			name = models;
+			sourceTree = "<group>";
+		};
+		28CA1CF718F85BDE005C5AD4 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				28CA1CEB18F84C0C005C5AD4 /* CompaniesCell.h */,
+				28CA1CEC18F84C0C005C5AD4 /* CompaniesCell.m */,
+				28CA1CF418F85BD0005C5AD4 /* RoleCell.h */,
+				28CA1CF518F85BD0005C5AD4 /* RoleCell.m */,
+				28CA1CB418F81952005C5AD4 /* FBFViewController.h */,
+				28CA1CB518F81952005C5AD4 /* FBFViewController.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		28CA1CF818F85BFF005C5AD4 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				28CA1CDC18F81BB0005C5AD4 /* Constants.h */,
+				28CA1CDD18F81BB0005C5AD4 /* Constants.m */,
+			);
+			name = utility;
+			sourceTree = "<group>";
+		};
+		28CA1CF918F85C0F005C5AD4 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				28CA1CD918F81B2C005C5AD4 /* AsyncNetwork.h */,
+				28CA1CDA18F81B2C005C5AD4 /* AsyncNetwork.m */,
+				28CA1CD618F81A8E005C5AD4 /* Reachability.h */,
+				28CA1CD718F81A8E005C5AD4 /* Reachability.m */,
+			);
+			name = network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28CA1CF618F85BD0005C5AD4 /* RoleCell.m in Sources */,
 				28CA1CF318F85797005C5AD4 /* User.m in Sources */,
 				28CA1CAC18F81952005C5AD4 /* main.m in Sources */,
 				28CA1CB018F81952005C5AD4 /* FBFAppDelegate.m in Sources */,

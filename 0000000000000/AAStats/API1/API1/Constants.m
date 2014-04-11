@@ -12,6 +12,9 @@
 
 NSString *const kNotifySuccess = @"DataSuccessfullyDownloaded";
 NSString *const kNotifyFail = @"DataFailed";
+
+NSString *const kDictionaryOfModelArrays = @"dictionaryOfModelArrays";
 NSString *const kArrayOfCompaniesModels = @"arrayOfCompaniesModels";
+NSString *const kArrayOfRoleModels = @"arrayOfRoleModels";
 
 

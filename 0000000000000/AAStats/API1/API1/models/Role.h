@@ -13,6 +13,8 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *description;
 
+@property (nonatomic ,retain ) NSMutableArray *permissions;
+
 -(Role *)initWithJsonDictionary:(NSDictionary *)dict;
 @end
 

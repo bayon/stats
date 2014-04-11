@@ -11,5 +11,8 @@
 
 FOUNDATION_EXPORT NSString *const kNotifySuccess;
 FOUNDATION_EXPORT NSString *const kNotifyFail;
+
+FOUNDATION_EXPORT NSString *const kDictionaryOfModelArrays;
 FOUNDATION_EXPORT NSString *const kArrayOfCompaniesModels;
+FOUNDATION_EXPORT NSString *const kArrayOfRoleModels;
 

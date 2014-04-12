@@ -20,9 +20,9 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *label1;
 
-- (IBAction)process:(id)sender;
+- (IBAction)processUsers:(id)sender;
 -(IBAction)selectInterval:(id)sender;
--(void)refreshInterval:(NSString *)interval forCompanyId:(NSString *)companyId;
+//-(void)refreshInterval:(NSString *)interval forCompanyId:(NSString *)companyId;
 
 
 @end

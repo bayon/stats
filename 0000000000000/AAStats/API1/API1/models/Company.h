@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "Pivot.h"
 #import "Preference.h"
+#import "Interval.h"
 
 
 // L E F T   O F F   H E R E    get this class set up , check tehm all and then see if we can do a successful download and parse.
@@ -18,6 +19,7 @@
 @property (nonatomic, retain) Pivot *pivot;
 @property (nonatomic, retain) Preference *preference;
 @property (nonatomic, retain) Company *company;
+@property (nonatomic, retain) Interval *interval;
 
 // "id" in the json as opposed to "company_id"
 @property (nonatomic, retain) NSString *primary_id;

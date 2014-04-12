@@ -80,20 +80,44 @@
 	return returnData;
 }
 
-- (IBAction)getRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary {
-	NSData *paramatersData = [self encodeDictionary:parameterDictionary forRequestType:@"get"];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+- (IBAction)getRequestToURL:(NSString *)urlString withParameters:(NSString *)parameterString {
+	
+    /*
+    NSData *parametersData = [self encodeDictionary:parameterDictionary forRequestType:@"get"];
+	 //convert data to string
+    NSString* stringParameters = [[NSString alloc] initWithData:parametersData encoding:NSUTF8StringEncoding];
+    
+    
+    //FAIL get request: http://hive.indatus.com/precompiled_reports/<3f696e74 65727661 6c3d746f 64617926 636f6d70 616e795f 69643d32 33>
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 	                                                       cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 	                                                   timeoutInterval:10];
 	[request setHTTPMethod:@"GET"];
-	[request setValue:[NSString stringWithFormat:@"%d", paramatersData.length] forHTTPHeaderField:@"Content-Length"];
+	//[request setValue:[NSString stringWithFormat:@"%d", parametersData.length] forHTTPHeaderField:@"Content-Length"];
 	//[request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 
 	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
-	[request setHTTPBody:paramatersData];
-	getConnection = [[NSURLConnection alloc] initWithRequest:request
+	[request setHTTPBody:parametersData];
+    */
+    
+    ////////////////////////////////
+    NSString *urlFinalString = [NSString stringWithFormat:@"%@%@",urlString,parameterString];
+    NSLog(@"\n get url string: %@",urlFinalString);
+    NSURL *url2 = [NSURL URLWithString:urlFinalString];
+    NSMutableURLRequest *request2 = [NSMutableURLRequest requestWithURL:url2
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:10];
+    
+    
+    
+    
+    
+    
+    
+	getConnection = [[NSURLConnection alloc] initWithRequest:request2
 	                                                delegate:self];
 	[getConnection start];
 }
@@ -113,6 +137,7 @@
 		[postResponseData appendData:data];
 	}
 	else if ([connection isEqual:getConnection]) {
+        [getResponseData appendData:data];
 	}
 }
 
@@ -121,6 +146,7 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserFail object:nil];
 	}
 	else if ([connection isEqual:getConnection]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalFail object:nil];
 	}
 }
 
@@ -138,6 +164,17 @@
 		//   V I E W   R E S P O N S E   ///////
 		[self viewJSONFromData:getResponseData];
 		////////////////////////////////////////
+        
+        
+        if(getResponseData != nil){
+            
+            NSDictionary *dictionaryOfIntervalModels = [self parseIntervalResponseData:getResponseData];
+            // how do I get this back to the block?
+            NSLog(@"\n\n get data: %@",dictionaryOfIntervalModels);
+            
+            //Invalid credentials
+        }
+        
 	}
 }
 
@@ -174,4 +211,26 @@
 	return localArrayOfUserModels;
 }
 
+- (NSDictionary *)parseIntervalResponseData:(NSMutableData *)mutableResponseData {
+    NSMutableArray *localArrayOfIntervals = [[NSMutableArray alloc] init];
+    NSDictionary *dictionaryOfIntervalModels;
+    @try {
+		NSError *e;
+		NSDictionary *dictionaryOfJsonFromResponseData =
+        [NSJSONSerialization JSONObjectWithData:mutableResponseData
+                                        options:NSJSONReadingMutableContainers
+                                          error:&e];
+        
+		Interval *interval = [[Interval alloc] initWithJsonDictionary:dictionaryOfJsonFromResponseData];
+		[localArrayOfIntervals addObject:interval];
+        
+		 dictionaryOfIntervalModels = @{ kArrayOfIntervalModels : localArrayOfIntervals };
+		//[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalSuccess object:self userInfo:dictionaryOfUserModels];
+	}
+	@catch (NSException *exception)
+	{
+		//[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalFail object:nil];
+	}
+    return dictionaryOfIntervalModels;
+}
 @end

@@ -18,6 +18,7 @@ NSString *const kNotifyIntervalFail = @"IntervalDataFailed";
 
 
 NSString *const kArrayOfUserModels = @"arrayOfUserModels";
+NSString *const kArrayOfIntervalModels = @"arrayOfIntervalModels";
 NSString *const kArrayOfCompaniesModels = @"arrayOfCompaniesModels";
 NSString *const kArrayOfRoleModels = @"arrayOfRoleModels";
 

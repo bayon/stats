@@ -79,19 +79,19 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels, us
 
 	_arrayOfCompanies = [_user getAllCompanies];
     
-	//SECOND API
-    // loop through companies and call interval per company
+	
     
-    
+    ////////////////////////////////////////////////////
     // CANDIDATE FOR OPERATION QUEUE
-    
-    
-    
+     // second API - loop through companies and call interval per company
     for(Company *company in _arrayOfCompanies){
         
         [self refreshInterval:_intervalType forCompanyId:company.primary_id];
     }
     
+    
+    // hopefully applying the interval data to each company object.
+    ///////////////////////////////////////////////////////////////////////
     
     
     

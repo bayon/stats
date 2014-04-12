@@ -9,24 +9,27 @@
 #import "Role.h"
 
 @implementation Role
-@synthesize company_id, description, name, permissions;
+@synthesize company_id, description, name;
+@synthesize permission;
 
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
         
+        self.role_id = dict[@"role_id"];
         self.company_id = dict[@"company_id"];
-        self.description = dict[@"description"];
         self.name = dict[@"name"];
+        self.description = dict[@"description"];
         
-          
-        permissions        = dict[@"permissions"];
+        self.role_type_id = dict[@"role_type_id"];
+        self.created_at = dict[@"created_at"];
+        self.updated_at = dict[@"updated_at"];
+        self.deleted_at = dict[@"deleted_at"];
         
+        NSArray *arrayOfPermission  = dict[@"permissions"];
+		NSDictionary *dictionaryOfPermission  = arrayOfPermission[0];
+		permission = [[Permission alloc] initWithJsonDictionary:dictionaryOfPermission];
         
-        //NSDictionary *permissions0  = permissions[0];
-         //NSString *artistName = permissions0[@"name"];
-         //self.permissions = artistName;
-         
 	}
     
 	return self;

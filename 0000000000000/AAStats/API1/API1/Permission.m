@@ -15,15 +15,18 @@
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
+        
+        NSArray *arrayOfPivot  = dict[@"pivot"];
+		NSDictionary *dictionaryOfPivot  = arrayOfPivot[0];
+		pivot = [[Pivot alloc] initWithJsonDictionary:dictionaryOfPivot];
+        
 		self.permission_id = dict[@"permission_id"];
 		self.product_id = dict[@"product_id"];
 		self.description = dict[@"description"];
 		self.created_at = dict[@"created_at"];
 		self.updated_at = dict[@"updated_at"];
 
-		NSArray *arrayOfPivots  = dict[@"pivot"];
-		NSDictionary *dictionaryOfPivotAtIndex0  = arrayOfPivots[0];
-		pivot = [[Pivot alloc] initWithJsonDictionary:dictionaryOfPivotAtIndex0];
+		
 	}
 
 	return self;

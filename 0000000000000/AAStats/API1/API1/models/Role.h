@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Permission.h"
 
 @interface Role : NSObject
+
+@property (nonatomic, retain) Permission *permission;
+
 @property (nonatomic, retain) NSString *role_id;
 @property (nonatomic, retain) NSString *company_id;
 @property (nonatomic, retain) NSString *name;
@@ -19,7 +23,7 @@
 @property (nonatomic, retain) NSString *deleted_at;
 
 
-@property (nonatomic ,retain ) NSMutableArray *permissions;
+
 
 -(Role *)initWithJsonDictionary:(NSDictionary *)dict;
 @end

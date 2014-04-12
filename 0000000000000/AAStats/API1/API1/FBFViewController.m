@@ -111,7 +111,7 @@
 
 	}
 	Company *companiesModel = _arrayOfCompaniesModels[indexPath.row];
-	cell.leftLabel.text = companiesModel.company_id;
+	cell.leftLabel.text = companiesModel.primary_id;
 	cell.rightLabel.text = companiesModel.name;
     
 	return cell;

@@ -30,7 +30,7 @@
 
 - (IBAction)postRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary {
 	NSData *paramatersData = [self encodeDictionary:parameterDictionary];
-	//convert data to string
+	//Data to String
 	NSString *dataString = [[NSString alloc] initWithData:paramatersData
 	                                             encoding:NSUTF8StringEncoding];
 
@@ -78,11 +78,13 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	if (responseData != nil) {
-		[self parseResponseData:responseData];
-		NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n", __FUNCTION__);
+        
+        ////////////////////////////////////////
+        //   P A R S E  ///////////////////
+		//[self parseResponseData:responseData];
+        ////////////////////////////////////////
 
-		//NSLog(@"response data: %@",responseData);
-		//[self viewJSONFromData:responseData];
+		[self viewJSONFromData:responseData];
 	}
 	else {
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
@@ -94,15 +96,11 @@
 	stringOfJsonEncodedData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	NSLog(@"stringOfJsonEncodedData:%@", stringOfJsonEncodedData);
 
-	// response 1 : {"errors":"Login failure"}
+	
 }
 
 #pragma mark - Parse Dictionary
-/**
-   This method parses the json response as NSMutableData, then creates and sends a dictionary
-   back with the notification if successful.
- */
-/**/
+
 
 - (NSMutableArray *)parseResponseData:(NSMutableData *)mutableResponseData {
 	//note: This method returns an array for the sake of a unit test.

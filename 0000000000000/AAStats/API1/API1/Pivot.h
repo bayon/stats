@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Pivot : NSObject
+
 @property (nonatomic, retain) NSString *company_id;
 @property (nonatomic, retain) NSString *role_id;
 @property (nonatomic, retain) NSString *user_id;

@@ -9,7 +9,9 @@
 #import "Pivot.h"
 
 @implementation Pivot
+
 @synthesize company_id, user_id, role_id;
+
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
@@ -20,6 +22,5 @@
     
 	return self;
 }
-
 
 @end

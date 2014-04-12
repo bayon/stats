@@ -21,7 +21,7 @@
 @end
 
 @implementation FBFViewController
-@synthesize reachability = _reachability, arrayOfCompaniesModels = _arrayOfCompaniesModels,
+@synthesize reachability = _reachability, arrayOfCompanies = _arrayOfCompanies,
 companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 
 - (void)viewDidLoad {
@@ -74,11 +74,14 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
     NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
 	_arrayOfUserModels = [notification userInfo][kArrayOfUserModels];
     
-    NSLog(@"_arrayOfUserModels : %d",[_arrayOfUserModels count]);
+    
     User *currentUser = [[User alloc]init];
     currentUser = [_arrayOfUserModels objectAtIndex:0];
     
-    NSLog(@"current User: %@",currentUser.first_name);
+    // GET ALL COMPANIES THAT BELONG TO THE USER.
+    
+    _arrayOfCompanies = [currentUser getAllCompanies];
+    NSLog(@"_arrayOfCompanies : %@",_arrayOfCompanies);
 	[_companyTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	//[spinner stopAnimating];
 }
@@ -90,23 +93,24 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [_arrayOfUserModels count];
+	return [_arrayOfCompanies count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-    /*
+    /**/
      static NSString *CellIdentifier = @"Cell";
      CompaniesCell *cell = (CompaniesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
      if (cell == nil) {
      cell = [[CompaniesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
      }
-     Company *companiesModel = _arrayOfCompaniesModels[indexPath.row];
-     cell.leftLabel.text = companiesModel.primary_id;
-     cell.rightLabel.text = companiesModel.name;
+     Company *company = _arrayOfCompanies[indexPath.row];
+    cell.leftLabel.text = company.name;
+	cell.rightLabel.text = company.unit_count;
      return cell;
-     */
+     
     
+    /*
     static NSString *CellIdentifier = @"UserCell";
 	UserCell *cell = (UserCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
@@ -116,9 +120,10 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
     Company *company = userModel.company;
     
     NSLog(@"company :%@",company);
-	cell.leftLabel.text = userModel.first_name;
-	cell.rightLabel.text = company.primary_id;
+	cell.leftLabel.text = company.name;
+	cell.rightLabel.text = company.unit_count;
 	return cell;
+     */
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,6 +11,8 @@
 #import "Constants.h"
 #import "Company.h"
 #import "CompaniesCell.h"
+#import "User.h"
+#import "UserCell.h"
 
 
 
@@ -21,7 +23,8 @@
 @end
 
 @implementation FBFViewController
-@synthesize reachability = _reachability, arrayOfCompaniesModels = _arrayOfCompaniesModels, companyTableView = _companyTableView;
+@synthesize reachability = _reachability, arrayOfCompaniesModels = _arrayOfCompaniesModels,
+companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 
 
 
@@ -30,23 +33,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(afterAsyncThreadCompletes:) name:kNotifySuccess object:asyncNetwork];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataFailed) name:kNotifyFail object:nil];
-	/*
-	 #### API
-
-	   Url: http://hive.indatus.com/authenticate
-
-	   Method: POST
-
-	   Parameters (for testing only, actual input should be used):
-
-	   Parameter | Value
-	   --- | ---
-	   subdomain | bwebb-gemini
-	   email | bwebb@indatus.com
-	   password | telecom1
-
-	 */
-
+	
 
 	[self process:self];
 }
@@ -91,7 +78,15 @@
 }
 
 - (void)afterAsyncThreadCompletes:(NSNotification *)notification {
-	_arrayOfCompaniesModels = [notification userInfo][kArrayOfCompaniesModels];
+    NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
+	_arrayOfUserModels = [notification userInfo][kArrayOfUserModels];
+    
+    
+    NSLog(@"_arrayOfUserModels : %d",[_arrayOfUserModels count]);
+    User *currentUser = [[User alloc]init];
+    currentUser = [_arrayOfUserModels objectAtIndex:0];
+    
+    NSLog(@"current User: %@",currentUser.first_name);
 	[_companyTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	//[spinner stopAnimating];
 }
@@ -103,20 +98,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [_arrayOfCompaniesModels count];
+	return [_arrayOfUserModels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *CellIdentifier = @"Cell";
-	CompaniesCell *cell = (CompaniesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[CompaniesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
-	}
-	Company *companiesModel = _arrayOfCompaniesModels[indexPath.row];
-	cell.leftLabel.text = companiesModel.primary_id;
-	cell.rightLabel.text = companiesModel.name;
+	
+    /*
+     static NSString *CellIdentifier = @"Cell";
+     CompaniesCell *cell = (CompaniesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+     if (cell == nil) {
+     cell = [[CompaniesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+     }
+     Company *companiesModel = _arrayOfCompaniesModels[indexPath.row];
+     cell.leftLabel.text = companiesModel.primary_id;
+     cell.rightLabel.text = companiesModel.name;
+     return cell;
+     */
     
+    static NSString *CellIdentifier = @"UserCell";
+	UserCell *cell = (UserCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[UserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+	}
+	User *userModel = _arrayOfUserModels[indexPath.row];
+	cell.leftLabel.text = userModel.first_name;
+	cell.rightLabel.text = userModel.last_name;
 	return cell;
 }
 

@@ -14,6 +14,7 @@
     Reachability *reachability;
 }
 @property (nonatomic, retain) Reachability *reachability;
+@property (nonatomic, retain) NSMutableArray *arrayOfUserModels;
 @property (nonatomic, retain) NSMutableArray *arrayOfCompaniesModels;
 @property (nonatomic, weak) IBOutlet UITableView *companyTableView;
 - (IBAction)process:(id)sender;

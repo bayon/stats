@@ -14,9 +14,12 @@ physical_postal_code, office_fax, office_phone, unit_count, corporate_contact_na
 , primary_contact_phone, primary_contact_title, sales_rep_id, billing_address, billing_city, billing_contact_email, billing_contact_name, billing_contact_phone, billing_contact_title, billing_id_number, billing_postal_code, billing_state , property_software_type_id, created_at, updated_at,
 deleted_at, parent_company;
 
-@synthesize pivot, preference, company;
+@synthesize pivot, preference;
+//@synthesize company;
 
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
+    
+    NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
 	self = [super init];
 	if (self) {
         
@@ -28,9 +31,9 @@ deleted_at, parent_company;
 		NSDictionary *dictionaryOfPreference  = arrayOfPreference[0];
 		preference = [[Preference alloc] initWithJsonDictionary:dictionaryOfPreference];
         
-        NSArray *arrayOfCompany  = dict[@"company"];
-		NSDictionary *dictionaryOfCompany  = arrayOfCompany[0];
-		company = [[Company alloc] initWithJsonDictionary:dictionaryOfCompany];
+       // NSArray *arrayOfCompany  = dict[@"company"];
+		//NSDictionary *dictionaryOfCompany  = arrayOfCompany[0];
+		//company = [[Company alloc] initWithJsonDictionary:dictionaryOfCompany];
         
         self.primary_id = dict[@"id"];
         self.subdomain = dict[@"subdomain"];

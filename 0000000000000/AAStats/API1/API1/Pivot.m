@@ -13,6 +13,8 @@
 @synthesize company_id, user_id, role_id;
 
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
+    NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
+
 	self = [super init];
 	if (self) {
         self.company_id = dict[@"company_id"];

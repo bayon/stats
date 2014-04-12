@@ -34,6 +34,7 @@
 		28CA1CFF18F88570005C5AD4 /* Pivot.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1CFE18F88570005C5AD4 /* Pivot.m */; };
 		28CA1D0218F88A45005C5AD4 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1D0118F88A45005C5AD4 /* Preference.m */; };
 		28CA1D0518F88A62005C5AD4 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1D0418F88A62005C5AD4 /* Status.m */; };
+		28CA1D0818F96D59005C5AD4 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1D0718F96D59005C5AD4 /* UserCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,8 @@
 		28CA1D0118F88A45005C5AD4 /* Preference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preference.m; sourceTree = "<group>"; };
 		28CA1D0318F88A62005C5AD4 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
 		28CA1D0418F88A62005C5AD4 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
+		28CA1D0618F96D59005C5AD4 /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		28CA1D0718F96D59005C5AD4 /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				28CA1CF518F85BD0005C5AD4 /* RoleCell.m */,
 				28CA1CB418F81952005C5AD4 /* FBFViewController.h */,
 				28CA1CB518F81952005C5AD4 /* FBFViewController.m */,
+				28CA1D0618F96D59005C5AD4 /* UserCell.h */,
+				28CA1D0718F96D59005C5AD4 /* UserCell.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				28CA1CF618F85BD0005C5AD4 /* RoleCell.m in Sources */,
 				28CA1CF318F85797005C5AD4 /* User.m in Sources */,
 				28CA1CAC18F81952005C5AD4 /* main.m in Sources */,
+				28CA1D0818F96D59005C5AD4 /* UserCell.m in Sources */,
 				28CA1CB018F81952005C5AD4 /* FBFAppDelegate.m in Sources */,
 				28CA1CD818F81A8E005C5AD4 /* Reachability.m in Sources */,
 				28CA1CDB18F81B2C005C5AD4 /* AsyncNetwork.m in Sources */,

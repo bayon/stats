@@ -17,7 +17,7 @@
 
 @property (nonatomic, retain) Pivot *pivot;
 @property (nonatomic, retain) Preference *preference;
-@property (nonatomic, retain) Company *company;
+//@property (nonatomic, retain) Company *company;
 
 // "id" in the json as opposed to "company_id"
 @property (nonatomic, retain) NSString *primary_id;

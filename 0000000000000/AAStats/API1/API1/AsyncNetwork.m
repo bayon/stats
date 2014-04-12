@@ -81,10 +81,10 @@
         
         ////////////////////////////////////////
         //   P A R S E  ///////////////////
-		//[self parseResponseData:responseData];
+		 [self parseResponseData:responseData];
         ////////////////////////////////////////
 
-		[self viewJSONFromData:responseData];
+		//[self viewJSONFromData:responseData];
 	}
 	else {
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
@@ -115,7 +115,7 @@
 
 		//NSLog(@"----dictionaryOfJsonFromResponseData : %@",dictionaryOfJsonFromResponseData);
 
-
+/*
 		for (id key in dictionaryOfJsonFromResponseData) {
 			id value = [dictionaryOfJsonFromResponseData objectForKey:key];
 			BOOL valueIsArray = [value isKindOfClass:[NSArray class]];
@@ -140,7 +140,7 @@
 				NSLog(@"\n   - - - -");
 			}
 		}
-        
+        */
         
         User *user = [[User alloc] initWithJsonDictionary:dictionaryOfJsonFromResponseData];
         [localArrayOfUserModels addObject:user];

@@ -12,9 +12,11 @@
 @synthesize user_id, first_name, last_name, mobile_phone_number, alt_phone_number,alt_phone_type_id ,email, created_at, updated_at,deleted_at ,role, company, preference, status;
 
 - (id)initWithJsonDictionary:(NSDictionary *)dict {
+    
+    
 	self = [super init];
 	if (self) {
-        
+        NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
         self.user_id = dict[@"id"];
         self.first_name = dict[@"first_name"];
         self.last_name = dict[@"last_name"];

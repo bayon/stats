@@ -10,8 +10,12 @@
 
 
 
-NSString *const kNotifySuccess = @"DataSuccessfullyDownloaded";
-NSString *const kNotifyFail = @"DataFailed";
+NSString *const kNotifyUserSuccess = @"UserDataSuccessfullyDownloaded";
+NSString *const kNotifyUserFail = @"UserDataFailed";
+
+NSString *const kNotifyIntervalSuccess = @"IntervalDataSuccessfullyDownloaded";
+NSString *const kNotifyIntervalFail = @"IntervalDataFailed";
+
 
 NSString *const kArrayOfUserModels = @"arrayOfUserModels";
 NSString *const kArrayOfCompaniesModels = @"arrayOfCompaniesModels";

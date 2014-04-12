@@ -39,98 +39,41 @@
 
 		//Company
 		NSArray *arrayOfCompany  = dict[@"companies"];
-        _arrayOfCompanies = [[NSMutableArray alloc]init];
-		//GET ALL COMPANIES OF A USER
+		_arrayOfCompanies = [[NSMutableArray alloc]init];
+
 		for (NSDictionary *dictionaryOfCompany in arrayOfCompany) {
-            
-            //view keys and values    /////////////
-            for(id key in dictionaryOfCompany) {
-                
-                id value = [dictionaryOfCompany objectForKey:key];
-                
-                // NSLog(@"Value is NOT an Array");
-                NSString *keyAsString = (NSString *)key;
-                NSString *valueAsString = (NSString *)value;
-               
-                 NSLog(@"key: %@", keyAsString);
-                NSLog(@"value: %@", valueAsString);
-                
-                // SUBCOMPANIES
-                
-                if([keyAsString isEqualToString:@"companies"]){
-                    
-                    NSLog(@"\n loop thru sub companies");
-                    NSArray *arrayOfSubCompanies  = dict[@"companies"];
-                    NSLog(@"\n arrayOfSubCompanies: %@",arrayOfSubCompanies);
-                    
-                    for (NSDictionary *dictionaryOfSubCompanies in arrayOfSubCompanies) {
-                        
-                        
-                        
-                        //NSLog(@"\n \n   SUBCOMPANIES:%@ \n \n ", dictionaryOfSubCompanies);
-                        
-                       // Company *subCompany  = [[Company alloc] initWithJsonDictionary:dictionaryOfSubCompany];
-                        //[_arrayOfCompanies addObject:subCompany];
-                        
-                        
-                        for(id key in dictionaryOfSubCompanies) {
-                            id value = [dictionaryOfSubCompanies objectForKey:key];
-                           BOOL valueIsArray = [value isKindOfClass:[NSArray class]];
-                            
-                            
-                            
-                            // NSLog(@"Value is NOT an Array");
-                            NSString *keyAsString = (NSString *)key;
-                            NSString *valueAsString = (NSString *)value;
-                            
-                            
-                            if([keyAsString isEqualToString:@"companies"]){
-                               
-                            }
-                            if(valueIsArray){
-                                
-                                
-                                // companies or preference_settings
-                                
-                                
-                                if([keyAsString isEqualToString:@"companies"]){
-                                    
-                                    NSLog(@"key: %@", keyAsString);
-                                    NSLog(@"value: %@", valueAsString);
-                                    // for each dictionary in value array
-                                    for(NSDictionary *dict in value){
-                                        NSLog(@"\n \n   SUBCOMPANY SINGULAR");
-                                        /////////////////////////////////////////
-                                        
-                                        Company *subCompany  = [[Company alloc] initWithJsonDictionary:dict];
-                                        [_arrayOfCompanies addObject:subCompany];
-                                        
-                                        
-                                        ////////////////////////////////////////
-                                    }
-                                }
-                                
-                            }
-                            
-                            
-                            // Company *subCompany  = [[Company alloc] initWithJsonDictionary:dictionaryOfSubCompany];
-                            //[_arrayOfCompanies addObject:subCompany];
-                            
-                        }
-                        
-                        
-                    }
-                    
-                    
-                    
-                }
-                
-            }
-            
-            /////////////
-            
-			Company *company  = [[Company alloc] initWithJsonDictionary:dictionaryOfCompany];
-            [_arrayOfCompanies addObject:company];
+			for (id key in dictionaryOfCompany) {
+				NSString *keyAsString = (NSString *)key;
+
+				// COMPANY
+				if ([keyAsString isEqualToString:@"companies"]) {
+					NSArray *arrayOfSubCompanies  = dict[@"companies"];
+
+					for (NSDictionary *dictionaryOfSubCompanies in arrayOfSubCompanies) {
+						for (id key in dictionaryOfSubCompanies) {
+							id value = [dictionaryOfSubCompanies objectForKey:key];
+							BOOL valueIsArray = [value isKindOfClass:[NSArray class]];
+							NSString *keyAsString = (NSString *)key;
+							if ([keyAsString isEqualToString:@"companies"]) {
+								Company *company  = [[Company alloc] initWithJsonDictionary:dictionaryOfCompany];
+								[_arrayOfCompanies addObject:company];
+							}
+							// SUB-COMPANY
+							if (valueIsArray) {
+								if ([keyAsString isEqualToString:@"companies"]) {
+									for (NSDictionary *dict in value) {
+										Company *subCompany  = [[Company alloc] initWithJsonDictionary:dict];
+										[_arrayOfCompanies addObject:subCompany];
+									}
+								}
+								if ([keyAsString isEqualToString:@"companies"]) {
+									//preference_settings if needed
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 
@@ -149,11 +92,8 @@
 	return self;
 }
 
-
--(NSMutableArray *) getAllCompanies{
-    NSLog(@"array of companies? %@",_arrayOfCompanies);
-    return _arrayOfCompanies;
+- (NSMutableArray *)getAllCompanies {
+	return _arrayOfCompanies;
 }
-
 
 @end

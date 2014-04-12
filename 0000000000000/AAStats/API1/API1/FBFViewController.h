@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSMutableArray *arrayOfCompanies;
 @property (nonatomic, weak) IBOutlet UITableView *companyTableView;
 - (IBAction)process:(id)sender;
+-(IBAction)selectInterval:(id)sender;
+-(void)refreshInterval:(NSString *)interval forCompanyId:(NSString *)companyId;
 @end
 
 

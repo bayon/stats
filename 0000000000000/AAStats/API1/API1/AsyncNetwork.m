@@ -13,75 +13,131 @@
 
 
 @interface AsyncNetwork () {
-	NSURLConnection *connection;
-	NSMutableData *responseData;
+	NSURLConnection *postConnection;
+	NSMutableData *postResponseData;
+
+	NSURLConnection *getConnection;
+	NSMutableData *getResponseData;
 }
 
-@property (nonatomic, retain) NSMutableData *responseData;
-@property (nonatomic, retain) NSURLConnection *connection;
+
+@property (nonatomic, retain) NSURLConnection *postConnection;
+@property (nonatomic, retain) NSMutableData *postResponseData;
+
+@property (nonatomic, retain) NSURLConnection *getConnection;
+@property (nonatomic, retain) NSMutableData *getResponseData;
+
 @property (nonatomic) int spaceIndex;
 
 @end
 
 @implementation AsyncNetwork
-@synthesize connection, responseData, spaceIndex;
+@synthesize postConnection, postResponseData, spaceIndex;
+@synthesize getConnection, getResponseData;
 
 - (IBAction)postRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary {
-	NSData *paramatersData = [self encodeDictionary:parameterDictionary];
+	NSData *paramatersData = [self encodeDictionary:parameterDictionary forRequestType:@"post"];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 	[request setHTTPMethod:@"POST"];
 	[request setValue:[NSString stringWithFormat:@"%d", paramatersData.length] forHTTPHeaderField:@"Content-Length"];
 	[request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPBody:paramatersData];
 
-	connection = [[NSURLConnection alloc] initWithRequest:request
-	                                             delegate:self];
-	[connection start];
+	postConnection = [[NSURLConnection alloc] initWithRequest:request
+	                                                 delegate:self];
+	[postConnection start];
 }
 
-- (NSData *)encodeDictionary:(NSDictionary *)dictionary {
-	NSMutableArray *parts = [[NSMutableArray alloc] init];
-	for (NSString *key in dictionary) {
-		NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
-		[parts addObject:part];
+- (NSData *)encodeDictionary:(NSDictionary *)dictionary forRequestType:(NSString *)requestType {
+	NSData *returnData;
+	if ([requestType isEqualToString:@"post"]) {
+		NSMutableArray *parts = [[NSMutableArray alloc] init];
+		for (NSString *key in dictionary) {
+			NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
+			[parts addObject:part];
+		}
+		NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+		returnData = [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
 	}
-	NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
-	return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+	if ([requestType isEqualToString:@"get"]) {
+		NSMutableArray *parts = [[NSMutableArray alloc] init];
+		for (NSString *key in dictionary) {
+			NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
+			[parts addObject:part];
+		}
+		NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+		NSString *finalGetParams = [NSString stringWithFormat:@"%@%@", @"?", encodedDictionary];
+
+		NSLog(@"\n finalGetParams:%@", finalGetParams);
+		returnData = [finalGetParams dataUsingEncoding:NSUTF8StringEncoding];
+	}
+
+
+	return returnData;
 }
 
-#pragma mark - NSURL Delegate Methods
+- (IBAction)getRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary {
+	NSData *paramatersData = [self encodeDictionary:parameterDictionary forRequestType:@"get"];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+	                                                       cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+	                                                   timeoutInterval:10];
+	[request setHTTPMethod:@"GET"];
+	[request setValue:[NSString stringWithFormat:@"%d", paramatersData.length] forHTTPHeaderField:@"Content-Length"];
+	//[request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 
+	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+	[request setHTTPBody:paramatersData];
+	getConnection = [[NSURLConnection alloc] initWithRequest:request
+	                                                delegate:self];
+	[getConnection start];
+}
+
+#pragma mark -  NSURL Delegate Methods
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-	responseData = [[NSMutableData alloc] init];
+	if ([connection isEqual:postConnection]) {
+		postResponseData = [[NSMutableData alloc] init];
+	}
+	else if ([connection isEqual:getConnection]) {
+		getResponseData = [[NSMutableData alloc] init];
+	}
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	[responseData appendData:data];
+	if ([connection isEqual:postConnection]) {
+		[postResponseData appendData:data];
+	}
+	else if ([connection isEqual:getConnection]) {
+	}
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
+	if ([connection isEqual:postConnection]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserFail object:nil];
+	}
+	else if ([connection isEqual:getConnection]) {
+	}
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	if (responseData != nil) {
-        
-		////////////////////////////////////////
-		//   P A R S E  ////////////////////////
-		[self parseResponseData:responseData];
-		////////////////////////////////////////
-
-        
-        ////////////////////////////////////////
-		//   V I E W   R E S P O N S E   ///////
-		//[self viewJSONFromData:responseData];
-        ////////////////////////////////////////
-
+	if ([connection isEqual:postConnection]) {
+		if (postResponseData != nil) {
+			[self parseUserResponseData:postResponseData];
+		}
+		else {
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserFail object:nil];
+		}
 	}
-	else {
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
+	else if ([connection isEqual:getConnection]) {
+		////////////////////////////////////////
+		//   V I E W   R E S P O N S E   ///////
+		[self viewJSONFromData:getResponseData];
+		////////////////////////////////////////
 	}
 }
 
@@ -93,7 +149,7 @@
 
 #pragma mark - Parse Dictionary
 
-- (NSMutableArray *)parseResponseData:(NSMutableData *)mutableResponseData {
+- (NSMutableArray *)parseUserResponseData:(NSMutableData *)mutableResponseData {
 	//note: This method returns an array for the sake of a unit test.
 	NSMutableArray *localArrayOfUserModels = [[NSMutableArray alloc] init];
 	@try {
@@ -102,16 +158,16 @@
 		    [NSJSONSerialization JSONObjectWithData:mutableResponseData
 		                                    options:NSJSONReadingMutableContainers
 		                                      error:&e];
-		 
+
 		User *user = [[User alloc] initWithJsonDictionary:dictionaryOfJsonFromResponseData];
 		[localArrayOfUserModels addObject:user];
-		 
+
 		NSDictionary *dictionaryOfUserModels = @{ kArrayOfUserModels : localArrayOfUserModels };
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifySuccess object:self userInfo:dictionaryOfUserModels];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserSuccess object:self userInfo:dictionaryOfUserModels];
 	}
 	@catch (NSException *exception)
 	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyFail object:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserFail object:nil];
 	}
 
 

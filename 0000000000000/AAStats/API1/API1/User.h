@@ -16,9 +16,16 @@
 @interface User : NSObject
 
 @property (nonatomic, retain) Role *role;
-@property (nonatomic, retain) Company *company;
+//@property (nonatomic, retain) Company *company;
 @property (nonatomic, retain) Preference *preference;
 @property (nonatomic, retain) Status *status;
+
+@property (nonatomic, retain) NSMutableArray *arrayOfCompanies;
+@property (nonatomic, retain) NSMutableArray *arrayOfPreferences;
+@property (nonatomic, retain) NSMutableArray *arrayOfRoles;
+@property (nonatomic, retain) NSMutableArray *arrayOfStatuses;
+
+
 
 @property (nonatomic, retain) NSString *user_id;
 @property (nonatomic, retain) NSString *first_name;
@@ -33,5 +40,6 @@
 
 -(User *)initWithJsonDictionary:(NSDictionary *)dict;
 
+-(NSMutableArray *) getAllCompanies; 
 @end
 

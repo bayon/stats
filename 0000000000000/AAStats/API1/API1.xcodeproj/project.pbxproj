@@ -36,6 +36,7 @@
 		28CA1D0518F88A62005C5AD4 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1D0418F88A62005C5AD4 /* Status.m */; };
 		28CA1D0818F96D59005C5AD4 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA1D0718F96D59005C5AD4 /* UserCell.m */; };
 		28CA1D0B18F97DB6005C5AD4 /* dict_companies in Resources */ = {isa = PBXBuildFile; fileRef = 28CA1D0A18F97DB6005C5AD4 /* dict_companies */; };
+		28CA1D0D18F98DC9005C5AD4 /* interval_notes in Resources */ = {isa = PBXBuildFile; fileRef = 28CA1D0C18F98DC9005C5AD4 /* interval_notes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		28CA1D0618F96D59005C5AD4 /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
 		28CA1D0718F96D59005C5AD4 /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 		28CA1D0A18F97DB6005C5AD4 /* dict_companies */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dict_companies; sourceTree = "<group>"; };
+		28CA1D0C18F98DC9005C5AD4 /* interval_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = interval_notes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 				28CA1CDA18F81B2C005C5AD4 /* AsyncNetwork.m */,
 				28CA1CD618F81A8E005C5AD4 /* Reachability.h */,
 				28CA1CD718F81A8E005C5AD4 /* Reachability.m */,
+				28CA1D0C18F98DC9005C5AD4 /* interval_notes */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28CA1D0D18F98DC9005C5AD4 /* interval_notes in Resources */,
 				28CA1D0B18F97DB6005C5AD4 /* dict_companies in Resources */,
 				28CA1CB818F81952005C5AD4 /* Images.xcassets in Resources */,
 				28CA1CAA18F81952005C5AD4 /* InfoPlist.strings in Resources */,

@@ -16,7 +16,9 @@
 @interface User : NSObject
 
 @property (nonatomic, retain) Role *role;
-//@property (nonatomic, retain) Company *company;
+
+@property (nonatomic, retain) Company *usersHomeCompany;
+
 @property (nonatomic, retain) Preference *preference;
 @property (nonatomic, retain) Status *status;
 

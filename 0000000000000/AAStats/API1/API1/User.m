@@ -38,9 +38,22 @@
         NSDictionary *dictionaryOfRole = arrayOfRole[0];
         role  = [[Role alloc] initWithJsonDictionary:dictionaryOfRole];
         
-        NSArray *arrayOfCompany  = dict[@"company"];
+        
+        
+        
+        
+        /////   WORK AREA    ////////////////////
+        NSArray *arrayOfCompany  = dict[@"companies"];
+        //NSLog(@"\n MODEL: arrayOfCompany: %@",arrayOfCompany);
         NSDictionary *dictionaryOfCompany = arrayOfCompany[0];
+        //NSLog(@"\n MODEL: dictionaryOfCompany : %@", dictionaryOfCompany);
         company  = [[Company alloc] initWithJsonDictionary:dictionaryOfCompany];
+        NSLog(@"\n MODEL: company: %@",company.name);
+        ////////////////////////////////////////////////////////////
+        
+        
+        
+        
         
         NSArray *arrayOfPreference  = dict[@"preference"];
         NSDictionary *dictionaryOfPreference = arrayOfPreference[0];

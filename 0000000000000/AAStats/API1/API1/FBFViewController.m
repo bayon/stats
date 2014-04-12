@@ -14,8 +14,6 @@
 #import "User.h"
 #import "UserCell.h"
 
-
-
 @interface FBFViewController () {
 	AsyncNetwork *asyncNetwork;
 }
@@ -26,15 +24,12 @@
 @synthesize reachability = _reachability, arrayOfCompaniesModels = _arrayOfCompaniesModels,
 companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 
-
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(afterAsyncThreadCompletes:) name:kNotifySuccess object:asyncNetwork];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataFailed) name:kNotifyFail object:nil];
 	
-
 	[self process:self];
 }
 
@@ -50,11 +45,9 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 	else {
 		NSString *postParams = [NSString stringWithFormat:@"&subdomain=%@&email=%@&password=%@", @"bwebb-gemini", @"bwebb@indatus.com", @"telecom1"];
 
-
 		NSString *baseURL = @"http://hive.indatus.com/authenticate";
 		asyncNetwork = [[AsyncNetwork alloc]init];
 
-        
         NSString *totalURL = [NSString stringWithFormat:@"%@%@",baseURL,postParams ];
         NSLog(@"\n total URL%@",totalURL);
         
@@ -80,7 +73,6 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 - (void)afterAsyncThreadCompletes:(NSNotification *)notification {
     NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
 	_arrayOfUserModels = [notification userInfo][kArrayOfUserModels];
-    
     
     NSLog(@"_arrayOfUserModels : %d",[_arrayOfUserModels count]);
     User *currentUser = [[User alloc]init];
@@ -121,8 +113,11 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
 		cell = [[UserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
 	User *userModel = _arrayOfUserModels[indexPath.row];
+    Company *company = userModel.company;
+    
+    NSLog(@"company :%@",company);
 	cell.leftLabel.text = userModel.first_name;
-	cell.rightLabel.text = userModel.last_name;
+	cell.rightLabel.text = company.primary_id;
 	return cell;
 }
 

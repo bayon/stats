@@ -152,6 +152,7 @@
 #
 #
 .xcworkspace
+.xcusertate
 ####
 # Xcode 4 - Deprecated classes
 #

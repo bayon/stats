@@ -81,7 +81,6 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels;
     // GET ALL COMPANIES THAT BELONG TO THE USER.
     
     _arrayOfCompanies = [currentUser getAllCompanies];
-    NSLog(@"_arrayOfCompanies : %@",_arrayOfCompanies);
 	[_companyTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	//[spinner stopAnimating];
 }

@@ -47,7 +47,6 @@
             NSLog(@"array of companies? %@",_arrayOfCompanies);
 		}
 
-
 		//Preference
 		NSArray *arrayOfPreference  = dict[@"preference"];
 		NSDictionary *dictionaryOfPreference = arrayOfPreference[0];

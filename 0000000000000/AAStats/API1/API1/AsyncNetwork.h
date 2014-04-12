@@ -13,8 +13,8 @@
 
 
 
-- (NSMutableArray *)parseResponseData:(NSMutableData *)mutableResponseData;
-
-
+- (NSMutableArray *)parseUserResponseData:(NSMutableData *)mutableResponseData;
 - (IBAction)postRequestToURL:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary;
+
+- (IBAction)getRequestToURL:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary;
 @end

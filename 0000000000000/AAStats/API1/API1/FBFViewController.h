@@ -17,9 +17,14 @@
 @property (nonatomic, retain) NSMutableArray *arrayOfUserModels;
 @property (nonatomic, retain) NSMutableArray *arrayOfCompanies;
 @property (nonatomic, weak) IBOutlet UITableView *companyTableView;
+
+@property (nonatomic, weak) IBOutlet UILabel *label1;
+
 - (IBAction)process:(id)sender;
 -(IBAction)selectInterval:(id)sender;
 -(void)refreshInterval:(NSString *)interval forCompanyId:(NSString *)companyId;
+
+
 @end
 
 

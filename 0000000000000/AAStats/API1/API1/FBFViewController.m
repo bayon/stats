@@ -14,6 +14,9 @@
 #import "User.h"
 #import "UserCell.h"
 
+#import "BackgroundThreadWorker.h"
+
+
 @interface FBFViewController () {
 	AsyncNetwork *asyncNetwork;
     User *user;
@@ -26,6 +29,9 @@
 @implementation FBFViewController
 @synthesize reachability = _reachability, arrayOfCompanies = _arrayOfCompanies,
 companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels, user = _user, intervalType = _intervalType;
+
+
+@synthesize label1 = _label1;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -86,9 +92,11 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels, us
      // second API - loop through companies and call interval per company
     for(Company *company in _arrayOfCompanies){
         
-        [self refreshInterval:_intervalType forCompanyId:company.primary_id];
+      //--->>>  [self refreshInterval:_intervalType forCompanyId:company.primary_id];
     }
+    BackgroundThreadWorker *bThread = [[BackgroundThreadWorker alloc]init];
     
+    [bThread doBackgroundThing:_label1 andString:@"Foo Haa Haa"];
     
     // hopefully applying the interval data to each company object.
     ///////////////////////////////////////////////////////////////////////

@@ -22,6 +22,9 @@
 
 @implementation FBFViewController
 @synthesize reachability = _reachability, arrayOfCompaniesModels = _arrayOfCompaniesModels, companyTableView = _companyTableView;
+
+
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.

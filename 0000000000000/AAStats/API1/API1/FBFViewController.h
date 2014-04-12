@@ -18,3 +18,7 @@
 @property (nonatomic, weak) IBOutlet UITableView *companyTableView;
 - (IBAction)process:(id)sender;
 @end
+
+
+// L E F T   O F F   H E R E
+// finished up the models , when trying to test I didn't get any data back. connection/service/password ???

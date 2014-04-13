@@ -60,6 +60,7 @@
 		}
 		NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
 		returnData = [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+
 	}
 	if ([requestType isEqualToString:@"get"]) {
 		NSMutableArray *parts = [[NSMutableArray alloc] init];
@@ -77,25 +78,39 @@
 	}
 
 
+
 	return returnData;
 }
 
-- (IBAction)getRequestToURL:(NSURL *)url withParameters:(NSDictionary *)parameterDictionary {
-	NSData *paramatersData = [self encodeDictionary:parameterDictionary forRequestType:@"get"];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-	                                                       cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-	                                                   timeoutInterval:10];
-	[request setHTTPMethod:@"GET"];
-	[request setValue:[NSString stringWithFormat:@"%d", paramatersData.length] forHTTPHeaderField:@"Content-Length"];
-	//[request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 
-	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
-	[request setHTTPBody:paramatersData];
-	getConnection = [[NSURLConnection alloc] initWithRequest:request
+- (IBAction)getRequestToURL:(NSString *)urlString withParameters:(NSString *)parameterString  withUsername:(NSString *)username andPassword:(NSString *)password{
+	
+    /*
+    >Username and pass should be given in http basic authentication headers instead of in the get request.
+     Then API send application/json as the content type and it should work.
+     >The API shoes views if it is text/HTML content type and json if that is requested
+     >The info in the markdown doc is copied from real test requests I made with those credentials so everything should be working for you.
+     >Content type and auth will be set as headers on the request.
+    */
+    
+    NSString *urlFinalString = [NSString stringWithFormat:@"%@%@",urlString,parameterString];
+    NSURL *url = [NSURL URLWithString:urlFinalString];
+    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:20.0f];
+    [theRequest setHTTPMethod:@"GET"]; //@"POST"
+    [theRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];                     //@"application/json; charset=UTF-8"
+    [theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];               //@"application/json; charset=UTF-8"
+    NSString *authorizationString = [NSString stringWithFormat:@"%@:%@",username, password];
+        // other alternative formats tried ...  @"%@:%@"  @"%@,%@"  @"%@&%@"   @"Basic %@:%@"
+    [theRequest setValue:authorizationString forHTTPHeaderField:@"Authorization"];
+	getConnection = [[NSURLConnection alloc] initWithRequest:theRequest
 	                                                delegate:self];
 	[getConnection start];
+    
+     NSLog(@"\n request and authentication:\n  %@ | %@ \n ",urlFinalString,authorizationString);
+    //The above code yields these results:
+    //request and authentication:
+    // http://hive.indatus.com/precompiled_reports/?interval=today&company_id=23 | Basic bwebb@indatus.com:telecom1
+
 }
 
 #pragma mark -  NSURL Delegate Methods
@@ -113,6 +128,9 @@
 		[postResponseData appendData:data];
 	}
 	else if ([connection isEqual:getConnection]) {
+
+        [getResponseData appendData:data];
+
 	}
 }
 
@@ -121,6 +139,9 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyUserFail object:nil];
 	}
 	else if ([connection isEqual:getConnection]) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalFail object:nil];
+
 	}
 }
 
@@ -134,10 +155,23 @@
 		}
 	}
 	else if ([connection isEqual:getConnection]) {
+
 		////////////////////////////////////////
 		//   V I E W   R E S P O N S E   ///////
 		[self viewJSONFromData:getResponseData];
 		////////////////////////////////////////
+        
+        
+        if(getResponseData != nil){
+            
+            NSDictionary *dictionaryOfIntervalModels = [self parseIntervalResponseData:getResponseData];
+            // how do I get this back to the block?
+            NSLog(@"\n\n get data: %@",dictionaryOfIntervalModels);
+            
+            //Invalid credentials
+        }
+        
+
 	}
 }
 
@@ -174,4 +208,36 @@
 	return localArrayOfUserModels;
 }
 
+- (NSDictionary *)parseIntervalResponseData:(NSMutableData *)mutableResponseData {
+    NSMutableArray *localArrayOfIntervals = [[NSMutableArray alloc] init];
+    NSDictionary *dictionaryOfIntervalModels;
+    @try {
+		NSError *e;
+		NSDictionary *dictionaryOfJsonFromResponseData =
+        [NSJSONSerialization JSONObjectWithData:mutableResponseData
+                                        options:NSJSONReadingMutableContainers
+                                          error:&e];
+        
+		Interval *interval = [[Interval alloc] initWithJsonDictionary:dictionaryOfJsonFromResponseData];
+		[localArrayOfIntervals addObject:interval];
+        
+		 dictionaryOfIntervalModels = @{ kArrayOfIntervalModels : localArrayOfIntervals };
+		//[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalSuccess object:self userInfo:dictionaryOfUserModels];
+	}
+	@catch (NSException *exception)
+	{
+		//[[NSNotificationCenter defaultCenter] postNotificationName:kNotifyIntervalFail object:nil];
+	}
+    return dictionaryOfIntervalModels;
+}
 @end
+
+/*
+ $ curl -i -X POST http://snej.cloudant.com/dbname/
+ HTTP/1.1 401 Unauthorized
+ WWW-Authenticate: Basic realm="Cloudant Private Database"
+ 
+ $ curl -i -X PUT https://domain.iriscouch.com/dbname
+ HTTP/1.1 401 Unauthorized
+ WWW-Authenticate: Basic realm="administrator"
+ */

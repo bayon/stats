@@ -16,5 +16,5 @@
 - (NSMutableArray *)parseUserResponseData:(NSMutableData *)mutableResponseData;
 - (IBAction)postRequestToURL:(NSURL *) url withParameters:(NSDictionary *)parameterDictionary;
 
-- (IBAction)getRequestToURL:(NSString *)urlString withParameters:(NSString *)parameterString;
+- (IBAction)getRequestToURL:(NSString *)urlString withParameters:(NSString *)parameterString withUsername:(NSString *)username andPassword:(NSString *)password;
 @end

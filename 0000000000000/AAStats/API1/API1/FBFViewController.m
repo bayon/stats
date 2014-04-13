@@ -102,6 +102,11 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels, us
 	//[spinner stopAnimating];
 }
 
+
+
+
+
+
 - (IBAction)processIntervals:(id)sender {
 	
     NSLog(@"\n F I L E -> F U N C T I O N : \n %s \n",__FUNCTION__);
@@ -118,13 +123,27 @@ companyTableView = _companyTableView, arrayOfUserModels = _arrayOfUserModels, us
 		asyncNetwork = [[AsyncNetwork alloc]init];
 		NSString *urlString =  @"http://hive.indatus.com/precompiled_reports/";
 
-		NSString *parameterString = [NSString stringWithFormat:@"?interval=%@&company_id=%@&email=%@&password=%@", _intervalType, company.primary_id,_user.email,@"telecom1"]; // _user.password
+		NSString *parameterString = [NSString stringWithFormat:@"?interval=%@&company_id=%@", _intervalType, company.primary_id]; // _user.password
 
-		[asyncNetwork getRequestToURL:urlString withParameters:parameterString];
+		[asyncNetwork getRequestToURL:urlString withParameters:parameterString withUsername:@"bwebb@indatus.com" andPassword:@"telecom1"];
 
 		//update company here add to array of modified companies...
 	}
 }
+
+
+/*
+ $ curl -i -X POST http://snej.cloudant.com/dbname/
+ HTTP/1.1 401 Unauthorized
+ WWW-Authenticate: Basic realm="Cloudant Private Database"
+ 
+ $ curl -i -X PUT https://domain.iriscouch.com/dbname
+ HTTP/1.1 401 Unauthorized
+ WWW-Authenticate: Basic realm="administrator"
+ */
+
+
+
 
 - (void)refreshTable {
 	[_companyTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];

@@ -10,8 +10,11 @@
 //v2 memory
 #define myAppDelegate (AppDelegate *) [[UIApplication sharedApplication] delegate]
 
-@interface TableViewViewController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
+@interface TableViewViewController : UIViewController<UITableViewDelegate, UITableViewDataSource , UITextFieldDelegate> {
 	IBOutlet UITableView* tblTest;
+    
+    IBOutlet UITextField *txtInput;
+    IBOutlet UIButton *btnAdd;
     //core data
     NSFetchedResultsController  *fetchedResultsController;
     NSManagedObjectContext      *managedObjectContext;
@@ -22,5 +25,9 @@
 @property (nonatomic, retain) NSManagedObjectContext        *managedObjectContext;
 @property (nonatomic, retain) NSMutableArray        *nsMutableArray;
 
+@property (nonatomic, retain) IBOutlet UITextField *txtInput;
+@property (nonatomic, retain) IBOutlet UIButton *btnAdd;
+
+-(IBAction)addAnother:(id)sender;
 @end
 
